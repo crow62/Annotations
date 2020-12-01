@@ -1,0 +1,12 @@
+
+1) https://projectlombok.org/setup/maven
+
+2) http://anthonywhitford.com/lombok.maven/lombok-maven-plugin/
+По умолчанию плагин ожидает, что все java классы, которые используют аннотации lombok,
+будут лежать в папках ./src/main/lombok и ./src/test/lombok вместо традиционных
+./src/main/java и ./src/test/java
+
+Результат генерации по умолчанию см. в ./target/generated-sources/delombok
+
+3) http://anthonywhitford.com/lombok.maven/lombok-maven-plugin/faq.html#alt-srcsetup
+Вот здесь написано, как подключить по-человечески.
