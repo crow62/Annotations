@@ -1,6 +1,7 @@
 package ru.rzn.sbt.javaschool.runtime;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Map;
 
 public class ToStrings {
     //TODO Создание обработчика собственной аннотации в runtime
-    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
+    public static void main(String[] args) {
 //        Class<?> aClass = Rectangle.class;
 //        Field field = aClass.getDeclaredField("width");
 //        field.setAccessible(true);
@@ -16,12 +17,13 @@ public class ToStrings {
 //        Object o = field.get(new Rectangle(new Point(15,30),100,200));
 //        System.out.println(o);
 
-        System.out.println(toString(new Rectangle(new Point(15,30),100,200)));
+        System.out.println(toString(new Rectangle(new Point(15,30),100,200, "DIMA")));
         //System.out.println(new Rectangle(new Point(15,30),100,200));
     }
 
     public static String toString(Object obj) {
 
+        if(obj == null) return null;
         Class<?> aClass = obj.getClass();
 
 
@@ -30,7 +32,7 @@ public class ToStrings {
             if (aClass.getAnnotation(ToString.class).includeName()) {
 
                 Map<String, Object> fieldsToString = getFieldsToString(obj);
-                return aClass.getSimpleName() + fieldsToString.toString();
+                return aClass.getName() + fieldsToString.toString();
 
             } else {
                 return getFieldsToString(obj).toString();
@@ -55,14 +57,15 @@ public class ToStrings {
             }
         }
 
-        Map<String, Object> map = new LinkedHashMap<>();
+        Map<String, Object> map = new LinkedHashMapImpl<>();
         if (!fieldWithAnnotation.isEmpty()) {
             for (Field field : fieldWithAnnotation) {
                 field.getAnnotation(ToString.class);
                 try {
-                    if(!field.getType().isPrimitive()){
+                    if(!field.getType().isPrimitive()) {
                         map.put(field.getName(), toString(field.get(obj)));
-                    } else {
+                    }
+                    else {
                         map.put(field.getName(), field.get(obj));
                     }
                 } catch (IllegalAccessException e) {
