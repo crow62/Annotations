@@ -6,27 +6,15 @@ public class Rectangle {
     private Point topLeft;
 
     @ToString
-    private String name;
-
-    @ToString
     private int width;
 
     @ToString
     private int height;
 
-    public Rectangle(Point topLeft, int width, int height, String name) {
+    public Rectangle(Point topLeft, int width, int height) {
         this.topLeft = topLeft;
         this.width = width;
         this.height = height;
-        this.name = name;
     }
 
-//    @Override
-//    public String toString() {
-//        return "Rectangle{" +
-//                "topLeft=" + topLeft +
-//                ", width=" + width +
-//                ", height=" + height +
-//                '}';
-//    }
 }
