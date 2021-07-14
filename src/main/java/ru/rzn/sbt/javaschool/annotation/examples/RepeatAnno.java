@@ -25,11 +25,11 @@ class RepeatAnno {
     //повторить аннотацию МyAnon в методе myМeth()
     @MyAnno(str = "Первая аннотация", val = -1)
     @MyAnno(str = "Вторая аннотация", val = 100)
-
     public static void myMeth(String str, int i) {
         RepeatAnno ob = new RepeatAnno();
         try {
             Class<?> obClass = ob.getClass();
+
             // получить аннотации для метода mуМеth ()
             Method m = obClass.getMethod("myMeth", String.class, int.class);
             // вывести повторяющиеся аннотации МyAnon

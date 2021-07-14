@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
 
 public class DefaultValues {
     // аннотировать метод, используя значения по умолчанию
-    @MyAnnoWithDefault(str = "Явно", val=100500)
+    @MyAnnoWithDefault
     public static void myMeth() {
         DefaultValues ob = new DefaultValues();
         // получить аннотацию для данного метода

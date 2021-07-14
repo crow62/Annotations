@@ -7,16 +7,17 @@ import java.lang.reflect.Method;
 @Retention(RetentionPolicy.RUNTIME)
 @interface MySingle {
     int value();
+    String name ();
 }
 
 public class Single {
-    @MySingle(100)
+    @MySingle(value = 100,name = "100")
     public static void myMeth() {
         Single ob = new Single();
         try {
             Method m = ob.getClass().getMethod("myMeth");
             MySingle anno = m.getAnnotation (MySingle.class);
-            System.out.println(anno.value());
+            System.out.println(anno.value() + anno.name());
         } catch (NoSuchMethodException e) {
             System.out.println("Meтoд не найден.");
         }
