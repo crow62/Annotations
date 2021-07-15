@@ -60,7 +60,7 @@ public class ToStrings {
                 try {
                     //тип не примитив и не стринг
                     if (!field.getType().isPrimitive() && !field.getType().getSimpleName().equals("String")) {
-                        objectList.add(field.getName() + toString(field.get(obj))); //рекурсия
+                        objectList.add(field.getType().getName() + " " + field.getName() + toString(field.get(obj))); //рекурсия
                     } else {
                         objectList.add((!field.getAnnotation(ToString.class).includeName() ? "" : field.getName()+ " = ") + field.get(obj));
                     }
