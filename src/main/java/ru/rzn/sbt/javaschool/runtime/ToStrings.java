@@ -16,24 +16,21 @@ public class ToStrings {
         Class<?> aClass = obj.getClass();
         List<Field> fieldsWithAnnotation = getFieldsWithAnnotations(obj);
 
-        if (aClass.isAnnotationPresent(ToString.class) ) {
+        if (aClass.isAnnotationPresent(ToString.class)) {
 
             if (aClass.getAnnotation(ToString.class).includeName()) {
 
-                Object[] fieldsToString = getFieldsToString(obj,fieldsWithAnnotation);
+                Object[] fieldsToString = getFieldsToString(obj, fieldsWithAnnotation);
                 return aClass.getName() + Arrays.toString(fieldsToString);
 
-            }
-            else {
-                return Arrays.toString(getFieldsToString(obj,fieldsWithAnnotation));
+            } else {
+                return Arrays.toString(getFieldsToString(obj, fieldsWithAnnotation));
             }
 
         } else {
-            return Arrays.toString(getFieldsToString(obj,fieldsWithAnnotation));
+            return Arrays.toString(getFieldsToString(obj, fieldsWithAnnotation));
         }
-
     }
-
 
     public static List<Field> getFieldsWithAnnotations(Object obj) {
 
@@ -51,18 +48,17 @@ public class ToStrings {
 
 
     //метод, возвращающий имена аннотированных полей и их значения
-    public static Object[] getFieldsToString(Object obj,List<Field> fieldsWithAnnotation ) {
+    public static Object[] getFieldsToString(Object obj, List<Field> fieldsWithAnnotation) {
 
         List<Object> objectList = new ArrayList<>();
         if (!fieldsWithAnnotation.isEmpty()) {
             for (Field field : fieldsWithAnnotation) {
                 field.getAnnotation(ToString.class);
                 try {
-                    //тип не примитив и не стринг
-                    if (!field.getType().isPrimitive() && !field.getType().getSimpleName().equals("String")) {
-                        objectList.add(field.getType().getName() + " " + field.getName() + toString(field.get(obj))); //рекурсия
+                    if (Arrays.stream(field.getType().getDeclaredFields()).anyMatch(x -> x.getAnnotation(ToString.class) != null)) {
+                        objectList.add(field.getName() + " " + toString(field.get(obj))); //рекурсия
                     } else {
-                        objectList.add((!field.getAnnotation(ToString.class).includeName() ? "" : field.getName()+ " = ") + field.get(obj));
+                        objectList.add((!field.getAnnotation(ToString.class).includeName() ? "" : field.getName() + " = ") + field.get(obj));
                     }
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
